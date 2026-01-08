@@ -61,10 +61,18 @@ flutter:
   # assets:
     
   assets:
-  -assets/images/imagedclic.png
-
+     - assets/images/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
+  #   - images/imagedclic.png
+  #   - images/imagean.png
+  #   - images/imageaz.png
+  #   - images/Business.png
+  #   - images/Culture.png
+  #   - images/Lifestyle.png
+  #   - images/Sante.png
+  #   - images/Voyages.png
+
      
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
