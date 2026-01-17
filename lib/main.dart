@@ -1,260 +1,336 @@
-import 'package:flutter/material.dart'; 
- 
-void main() { 
-  runApp(const MonAppli()); 
-} 
- 
-class MonAppli extends StatelessWidget { 
-   const MonAppli({super.key}); 
- 
-  @override 
-  Widget build(BuildContext context) { 
-    return  MaterialApp( 
-      title: 'Magasine Infos',
-      debugShowCheckedModeBanner: true, 
-     home:(PageAccueil()), 
-     // MaterialApp
-    ); 
-  } 
-} 
- 
-class PageAccueil extends StatelessWidget { 
-     const PageAccueil({super.key});
- 
-  @override 
-  Widget build(BuildContext context) { 
-    return Scaffold( 
-      appBar: AppBar( 
-        title: const Text('Magasine Infos', 
-          style: TextStyle( 
-            color: Colors.white 
-          ), 
-        ) , 
-        backgroundColor: Colors.pinkAccent, 
-        centerTitle: true, 
-        leading: IconButton( 
-          icon: const Icon(Icons.menu,color: Colors.white,), 
-          onPressed: (){}, 
-        ), 
-        actions: [ 
-          IconButton(onPressed: (){}, icon: const Icon(Icons.search,color: 
-Colors.white,)) 
-        ], 
-      ), 
-      body: SingleChildScrollView(
-  child: Column(
-    children: const [
-      Image(
-        image: AssetImage('assets/images/imagedclic.png'),
-      ),
-      PartieTitre(),
-      PartieTexte(),
-      PartieIcone(),
-      PartieRubrique(),
-    ],
-  ),
-),
+import 'package:flutter/material.dart';
 
-            
-      //floatingActionButton: FloatingActionButton( 
-      // onPressed: () {
-      // debugPrint('Tu as cliqué dessus');
-      //},
-      //backgroundColor: Colors.pink,
-      //child: Text('Click'),
-    ); // Scaffold
-  }
+import 'Modele/Redacteur.dart';
+
+void main() {
+  runApp(const MonApplication());
 }
 
-class PartieTitre extends StatelessWidget {
-  const PartieTitre({super.key});
+class MonApplication extends StatelessWidget {
+  const MonApplication({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      child: const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Bienvenue sur Magasine Infos',
-          style: TextStyle(fontSize:25, fontWeight: FontWeight.w800)
-        ),  // Text
-        Text(
-          "Votre magazine numérique, votre source d'inspiration",
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)
-        ), // Text
-        ],
-      ), // Column
-    ); // Container
-  }  
-}
-
-class PartieTexte extends StatelessWidget {
-  const PartieTexte({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: const Text(
-         "Magazine Infos est bien plus qu'une simple magazine d'inforamtions."
-         "C'est une plateforme où vous pouvez découvrir des articles captivants, "
-         "des interviews exclusives, et des analyses approfondies sur une variété de sujets."
-         "Que vous soyez passionné par la technologie, la culture, la santé, ou les voyages, "
-         "Magazine Infos a quelque chose pour vous.",
-         textAlign: TextAlign.justify,
-         style: TextStyle(fontSize: 16, height: 1.5
-    ), // Container
-  ));
-  }
-}
-
-class PartieIcone extends StatelessWidget {
-  const PartieIcone({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                const Icon(Icons.phone, color: Colors.pink),
-                const SizedBox(height: 5),
-                Text(
-                  'Tel' .toUpperCase(),
-                  style: const TextStyle(color: Colors.pink),
-                ) // Text
-              ],
-            ), // Column   
-          ), // Container
-          Container(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                const Icon(Icons.email, color: Colors.pink),
-                const SizedBox(height: 5),
-                Text(
-                  'Email' .toUpperCase(),
-                  style: const TextStyle(color: Colors.pink),
-                ) // Text
-              ],
-            ), // Column   
-          ), // Container
-          Container(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                const Icon(Icons.share, color: Colors.pink),
-                const SizedBox(height: 5),
-                Text(
-                  'partage' .toUpperCase(),
-                  style: const TextStyle(color: Colors.pink),
-                ) // Text
-              ],
-            ), // Column
-          ), // conatiner
-        ], // children
-      ), // Row
-    ); // Container
-  }
-}
-
-
-class PartieRubrique extends StatelessWidget {
-  const PartieRubrique({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    List<Map<String, String>> rubriques = [
-      {'titre': 'Culture', 'image': 'assets/images/Culture.png'},
-      {'titre': 'Lifestyle', 'image': 'assets/images/Lifestyle.png'},
-      {'titre': 'Santé', 'image': 'assets/images/Santé.png'},
-      {'titre': 'Voyages', 'image': 'assets/images/Voyages.png'},
-      {'titre': 'Business', 'image': 'assets/images/Business.png'},
-    ];
-
-    return Padding(
-      padding: const EdgeInsets.all(12),
-      child: GridView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: rubriques.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 12,
-          mainAxisSpacing: 12,
-          childAspectRatio: 0.75,
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Mon Application',
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.pink,
+          centerTitle: true,
+          title: const WhiteText('Gestion des rédacteurs'),
+          leading: IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.menu, color: Colors.white),
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.search, color: Colors.white),
+            )
+          ],
         ),
-        itemBuilder: (context, index) {
-          return Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 5,
-                ),
-              ],
-            ),
+        body: const RedacteurInterface(),
+      ),
+    );
+  }
+}
+
+
+class RedacteurInterface extends StatefulWidget {
+  const RedacteurInterface({super.key});
+
+  @override
+  State<RedacteurInterface> createState() => _RedacteurInterfaceState();
+}
+
+class _RedacteurInterfaceState extends State<RedacteurInterface> {
+  final TextEditingController _nomController = TextEditingController();
+  final TextEditingController _prenomController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  late Future<void> _initializeDbFuture;
+  late Future<List<Redacteur>> _redacteursFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeDbFuture = DatabaseManager().initialize();
+    _redacteursFuture = DatabaseManager().getAllRedacteurs();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<void>(
+      future: _initializeDbFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Erreur : ${snapshot.error}'));
+        } else {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Expanded(
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(12),
-                    ),
-                    child: Image.asset(
-                      rubriques[index]['image']!,
-                      fit: BoxFit.cover,
-                      width: double.infinity,
+                TextField(
+                  controller: _nomController,
+                  decoration: const InputDecoration(labelText: 'Nom'),
+                ),
+                const SizedBox(height: 20.0),
+                TextField(
+                  controller: _prenomController,
+                  decoration: const InputDecoration(labelText: 'Prénom'),
+                ),
+                const SizedBox(height: 20.0),
+                TextField(
+                  controller: _emailController,
+                  decoration: const InputDecoration(labelText: 'Email'),
+                ),
+                const SizedBox(height: 20.0),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    String nom = _nomController.text;
+                    String email = _emailController.text;
+                    String prenom = _prenomController.text;
+
+                    Redacteur redacteur = Redacteur.withoutId(
+                      nom: nom,
+                      prenom: prenom,
+                      email: email,
+                    );
+
+                    DatabaseManager().insertRedacteur(redacteur).then((_) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Rédacteur ajouté avec succès !'),
+                        ),
+                      );
+
+                      _nomController.clear();
+                      _prenomController.clear();
+                      _emailController.clear();
+
+                      setState(() {
+                        _redacteursFuture = DatabaseManager().getAllRedacteurs();
+                      });
+                    }).catchError((error) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Erreur lors de l\'ajout du rédacteur: $error'),
+                        ),
+                      );
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.pink,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
+                  icon: const Icon(Icons.add, color: Colors.white),
+                  label: const WhiteText('Ajouter un Rédacteur'),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Text(
-                    rubriques[index]['titre']!,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                const SizedBox(height: 20.0),
+                Expanded(
+                  child: FutureBuilder<List<Redacteur>>(
+                    future: _redacteursFuture,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text('Erreur : ${snapshot.error}'));
+                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return const Center(child: Text('Aucun rédacteur trouvé.'));
+                      } else {
+                        return ListView.builder(
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            final redacteur = snapshot.data![index];
+                            return ListTile(
+                              title: Text('${redacteur.nom} ${redacteur.prenom}'),
+                              subtitle: Text(redacteur.email),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(Icons.delete, color: Colors.red),
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: const Text('Supprimer le rédacteur'),
+                                            content: const Text('Êtes-vous sûr de vouloir supprimer ce rédacteur ?'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: const Text('Annuler'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  DatabaseManager().deleteRedacteur(redacteur.id!).then((_) {
+                                                    setState(() {
+                                                      _redacteursFuture = DatabaseManager().getAllRedacteurs();
+                                                    });
+                                                    ScaffoldMessenger.of(context).showSnackBar(
+                                                      const SnackBar(
+                                                        content: Text('Rédacteur supprimé avec succès !'),
+                                                      ),
+                                                    );
+                                                    Navigator.of(context).pop(); // Fermer la boîte de dialogue
+                                                  }).catchError((error) {
+                                                    ScaffoldMessenger.of(context).showSnackBar(
+                                                      SnackBar(
+                                                        content: Text('Erreur lors de la suppression du rédacteur: $error'),
+                                                      ),
+                                                    );
+                                                  });
+                                                },
+                                                child: const Text('Supprimer',style: TextStyle(color: Colors.pink)),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.edit, color: Colors.blue),
+                                    onPressed: () {
+                                      _nomController.text = redacteur.nom;
+                                      _prenomController.text = redacteur.prenom;
+                                      _emailController.text = redacteur.email;
+
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: const Text('Modifier le rédacteur'),
+                                            content: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                TextField(
+                                                  controller: _nomController,
+                                                  decoration: const InputDecoration(labelText: 'Nom'),
+                                                ),
+                                                TextField(
+                                                  controller: _prenomController,
+                                                  decoration: const InputDecoration(labelText: 'Prénom'),
+                                                ),
+                                                TextField(
+                                                  controller: _emailController,
+                                                  decoration: const InputDecoration(labelText: 'Email'),
+                                                ),
+                                              ],
+                                            ),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: const Text('Annuler',style: TextStyle(color: Colors.pink)),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  String nom = _nomController.text;
+                                                  String prenom = _prenomController.text;
+                                                  String email = _emailController.text;
+
+                                                  Redacteur redacteurModifie = Redacteur(
+                                                    id: redacteur.id,
+                                                    nom: nom,
+                                                    prenom: prenom,
+                                                    email: email,
+                                                  );
+
+                                                  DatabaseManager().updateRedacteur(redacteurModifie).then((_) {
+                                                    setState(() {
+                                                      _redacteursFuture = DatabaseManager().getAllRedacteurs();
+                                                    });
+                                                    ScaffoldMessenger.of(context).showSnackBar(
+                                                      const SnackBar(
+                                                        content: Text('Rédacteur modifié avec succès !'),
+                                                      ),
+                                                    );
+                                                    Navigator.of(context).pop();
+                                                    // Fermer la boîte de dialogue
+                                                    _nomController.clear();
+                                                    _prenomController.clear();
+                                                    _emailController.clear();
+                                                  }).catchError((error) {
+                                                    ScaffoldMessenger.of(context).showSnackBar(
+                                                      SnackBar(
+                                                        content: Text('Erreur lors de la modification du rédacteur: $error'),
+                                                      ),
+                                                    );
+                                                  });
+                                                },
+                                                child: const Text('Modifier'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      }
+                    },
                   ),
                 ),
               ],
             ),
           );
-        },
-      ),
+        }
+      },
     );
   }
 }
 
 
+// Classe text avec la couleur blanche
 
-class ContenuRubrique extends StatelessWidget {
-  final String titre;
+class WhiteText extends StatelessWidget {
+  final String data;
+  final TextStyle? style;
+  final TextAlign? textAlign;
+  final TextDirection? textDirection;
+  final bool? softWrap;
+  final TextOverflow? overflow;
+  final double? textScaleFactor;
+  final int? maxLines;
 
-  const ContenuRubrique({super.key, required this.titre});
+  const WhiteText(
+      this.data, {
+        Key? key,
+        this.style,
+        this.textAlign,
+        this.textDirection,
+        this.softWrap,
+        this.overflow,
+        this.textScaleFactor,
+        this.maxLines,
+      }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(titre),
-      ),
-      body: Center(
-        child: Text(
-          'Contenu de la rubrique $titre',
-          style: const TextStyle(fontSize: 18),
-        ),
-      ),
+    return Text(
+      data,
+      style: const TextStyle(color: Colors.white).merge(style),
+      textAlign: textAlign,
+      textDirection: textDirection,
+      softWrap: softWrap,
+      overflow: overflow,
+      maxLines: maxLines,
     );
   }
 }
+
